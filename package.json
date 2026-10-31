@@ -1,0 +1,72 @@
+{
+  "name": "marketmix-edit",
+  "version": "0.1.0",
+  "description": "MarketMix Edit — video editor with AI background blur",
+  "main": "electron/main.cjs",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build",
+    "start": "vite build && electron .",
+    "test:export": "node scripts/test-export.cjs",
+    "pack": "vite build && electron-builder --dir",
+    "dist": "vite build && electron-builder --win nsis"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^1.2.0",
+    "ffmpeg-static": "^5.2.0",
+    "ffprobe-static": "^3.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.2.1",
+    "electron-builder": "^24.13.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^6.0.7"
+  },
+  "overrides": {
+    "app-builder-bin": "4.2.0"
+  },
+  "productName": "MarketMix Edit",
+  "author": "MarketMix Foundation",
+  "build": {
+    "appId": "site.marketmix.edit",
+    "productName": "MarketMix Edit",
+    "copyright": "Copyright © 2026 MarketMix Foundation",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "assets/icon.png",
+      "package.json",
+      "!node_modules/@mediapipe/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**/*",
+      "node_modules/ffprobe-static/**/*"
+    ],
+    "win": {
+      "icon": "assets/icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "MarketMix-Edit-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MarketMix Edit"
+    }
+  }
+}
